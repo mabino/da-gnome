@@ -1,0 +1,15 @@
+{
+  "name": "birthday-battle",
+  "version": "1.0.0",
+  "description": "Tiny HTML5 platformer: jump the cakes and reach the present",
+  "main": "game.js",
+  "scripts": {
+    "start": "browser-sync start --server --files \"*.html, *.css, *.js\" --no-ui --no-notify",
+    "dev": "npm run start"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^3.0.4"
+  }
+}

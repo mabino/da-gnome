@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Da Gnome Pal on Mars</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="game-wrap">
+    <canvas id="game-canvas" width="960" height="540"></canvas>
+    <div id="hud">
+      <div id="stats">Deaths: <span id="deaths">0</span></div>
+      <div id="lives-wrap"><span class="lives-label">Lives:</span> <div id="lives" aria-label="Lives"></div></div>
+    </div>
+    <!-- touch controls (hidden unless touch detected) -->
+    <div id="touch-controls" class="hidden" aria-hidden="true">
+      <button id="tc-left" class="touch-btn" aria-label="Left">◀</button>
+      <button id="tc-jump" class="touch-btn" aria-label="Jump">⤒</button>
+      <button id="tc-right" class="touch-btn" aria-label="Right">▶</button>
+    </div>
+    
+  </div>
+  <!-- overlays are outside game-wrap so global filters on the game don't affect them -->
+  <div id="splash">
+    <div id="splash-inner">
+      <h1 id="splash-title">Da Gnome Pal on Mars</h1>
+       <p id="splash-sub">A tiny gnome's Mars adventure.  Avoid the murderous cosmic cakes to save your buddy!</p>
+      <button id="play-btn" onclick="startGame()">Play</button>
+    </div>
+  </div>
+  <div id="overlay" class="hidden">
+    <div id="overlay-content">
+      <h1 id="overlay-title">You Win!</h1>
+      <p id="overlay-sub">A present and many candles — the battle is won.</p>
+      <button id="restart">Play Again</button>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
