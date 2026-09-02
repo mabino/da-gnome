@@ -342,3 +342,15 @@ test('Level & World Configuration Integrity', async (t) => {
     assert.ok(presentGoalX > playerStartX + 3000, 'present goal is far enough for a fun full level run');
   });
 });
+
+test('game.js Source Script Validation', async (t) => {
+  await t.test('game.js has valid syntax and compiles without error', async () => {
+    const fs = await import('node:fs');
+    const vm = await import('node:vm');
+    const path = await import('node:path');
+    const code = fs.readFileSync(path.resolve('game.js'), 'utf8');
+    assert.doesNotThrow(() => {
+      new vm.Script(code);
+    }, 'game.js should parse and compile with zero syntax errors');
+  });
+});

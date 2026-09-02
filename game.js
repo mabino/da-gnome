@@ -4,6 +4,25 @@
 (() => {
   'use strict';
 
+  // Canvas roundRect polyfill for universal browser compatibility
+  if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D.prototype.roundRect) {
+    CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, radii = 0) {
+      if (!Array.isArray(radii)) radii = [radii, radii, radii, radii];
+      const [tl, tr = tl, br = tl, bl = tr] = radii;
+      this.moveTo(x + tl, y);
+      this.lineTo(x + w - tr, y);
+      this.quadraticCurveTo(x + w, y, x + w, y + tr);
+      this.lineTo(x + w, y + h - br);
+      this.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
+      this.lineTo(x + bl, y + h);
+      this.quadraticCurveTo(x, y + h, x, y + h - bl);
+      this.lineTo(x, y + tl);
+      this.quadraticCurveTo(x, y, x + tl, y);
+      this.closePath();
+      return this;
+    };
+  }
+
   const canvas = document.getElementById('game-canvas');
   const ctx = canvas.getContext('2d');
 
@@ -152,7 +171,7 @@
         if (sx + l.radius < -100 || sx - l.radius > camera.width + 100 || sy + l.radius < -100 || sy - l.radius > camera.height + 100) continue;
         const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, l.radius);
         grad.addColorStop(0, l.color);
-        grad.addColorStop(0.4, l.color.replace(/[\d\.]+\)$/, (parseFloat(l.color.match(/[\d\.]+\)$/)?.[0] || 1) * 0.4 + ')'));
+        grad.addColorStop(0.5, l.color);
         grad.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = grad;
         ctx.beginPath();
