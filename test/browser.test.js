@@ -3,9 +3,15 @@ import assert from 'node:assert/strict';
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
-import { chromium } from 'playwright';
+let chromium;
+try {
+  const pw = await import('playwright');
+  chromium = pw.chromium;
+} catch {
+  // Playwright not installed (e.g. unit test runner)
+}
 
-test('End-to-End Browser Runtime Gate', async (t) => {
+test('End-to-End Browser Runtime Gate', { skip: !chromium }, async (t) => {
   let server;
   let port;
   let browser;
