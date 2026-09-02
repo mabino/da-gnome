@@ -1,11 +1,13 @@
 {
-  "name": "birthday-battle",
-  "version": "1.0.0",
-  "description": "Tiny HTML5 platformer: jump the cakes and reach the present",
+  "name": "da-gnome-pal-on-mars",
+  "version": "2.0.0",
+  "description": "Da Gnome Pal on Mars — 2026 Edition: High-fidelity HTML5 Canvas sidescroller platformer",
   "main": "game.js",
+  "type": "module",
   "scripts": {
     "start": "browser-sync start --server --files \"*.html, *.css, *.js\" --no-ui --no-notify",
-    "dev": "npm run start"
+    "dev": "npm run start",
+    "test": "node --test test/*.test.js"
   },
   "author": "",
   "license": "MIT",

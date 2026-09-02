@@ -2,41 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Da Gnome Pal on Mars</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#1a0808" />
+  <meta name="description" content="Da Gnome Pal on Mars - An updated, high-fidelity 2026 HTML5 canvas sidescroller. Avoid the cosmic cakes and rescue Astro Steve!" />
+  <title>Da Gnome Pal on Mars — 2026 Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="game-wrap">
-    <canvas id="game-canvas" width="960" height="540"></canvas>
-    <div id="hud">
-      <div id="stats">Deaths: <span id="deaths">0</span></div>
-      <div id="lives-wrap"><span class="lives-label">Lives:</span> <div id="lives" aria-label="Lives"></div></div>
-    </div>
-    <!-- touch controls (hidden unless touch detected) -->
-    <div id="touch-controls" class="hidden" aria-hidden="true">
-      <button id="tc-left" class="touch-btn" aria-label="Left">◀</button>
-      <button id="tc-jump" class="touch-btn" aria-label="Jump">⤒</button>
-      <button id="tc-right" class="touch-btn" aria-label="Right">▶</button>
-    </div>
+    <canvas id="game-canvas" width="1280" height="720"></canvas>
     
-  </div>
-  <!-- overlays are outside game-wrap so global filters on the game don't affect them -->
-  <div id="splash">
-    <div id="splash-inner">
-      <h1 id="splash-title">Da Gnome Pal on Mars</h1>
-       <p id="splash-sub">A tiny gnome's Mars adventure.  Avoid the murderous cosmic cakes to save your buddy!</p>
-      <button id="play-btn" onclick="startGame()">Play</button>
+    <!-- Modern 2026 Glassmorphic HUD -->
+    <div id="hud">
+      <div class="hud-panel hud-left">
+        <div id="lives-wrap">
+          <span class="hud-label">LIFE SUPPORT</span>
+          <div id="lives" aria-label="Lives"></div>
+        </div>
+      </div>
+
+      <div class="hud-panel hud-center">
+        <div id="progress-wrap">
+          <span class="progress-title">MARS TRAVERSE</span>
+          <div id="progress-bar-bg">
+            <div id="progress-bar-fill"></div>
+            <div id="progress-gnome-pin" title="Da Gnome">🧙</div>
+            <div id="progress-target-pin" title="Astro Steve's Present">🎁</div>
+          </div>
+          <span id="progress-dist">0%</span>
+        </div>
+      </div>
+
+      <div class="hud-panel hud-right">
+        <div id="stats-wrap">
+          <div class="stat-badge"><span class="stat-icon">💀</span><span id="deaths">0</span></div>
+          <button id="audio-toggle" class="hud-btn" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- On-screen touch controls for mobile & tablets -->
+    <div id="touch-controls" class="hidden" aria-hidden="true">
+      <div class="touch-cluster-left">
+        <button id="tc-left" class="touch-btn" aria-label="Left">◀</button>
+        <button id="tc-right" class="touch-btn" aria-label="Right">▶</button>
+      </div>
+      <div class="touch-cluster-right">
+        <button id="tc-jump" class="touch-btn touch-jump" aria-label="Jump">⤒ JUMP</button>
+      </div>
     </div>
   </div>
+
+  <!-- Splash / Mission Briefing Screen -->
+  <div id="splash">
+    <div id="splash-card">
+      <div class="splash-badge">★ EXPEDITION 2026 ★</div>
+      <h1 id="splash-title">DA GNOME PAL<br><span class="title-sub">ON MARS</span></h1>
+      <p id="splash-sub">Traverse the crimson Martian dunes, dodge the murderous sentient cosmic cakes, and liberate your lost buddy Astro Steve from the containment pod!</p>
+      
+      <div class="controls-guide">
+        <div class="control-pill">
+          <span class="key-badge">A</span> <span class="key-badge">D</span> / <span class="key-badge">◀</span> <span class="key-badge">▶</span>
+          <span class="control-label">Move</span>
+        </div>
+        <div class="control-pill">
+          <span class="key-badge">SPACE</span> / <span class="key-badge">W</span> / <span class="key-badge">▲</span>
+          <span class="control-label">Jump & Double-Jump</span>
+        </div>
+      </div>
+
+      <button id="play-btn" class="glow-button" onclick="startGame()">
+        <span class="btn-text">LAUNCH MISSION</span>
+        <div class="btn-glow"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Victory & Game Over Overlays -->
   <div id="overlay" class="hidden">
     <div id="overlay-content">
-      <h1 id="overlay-title">You Win!</h1>
-      <p id="overlay-sub">A present and many candles — the battle is won.</p>
-      <button id="restart">Play Again</button>
+      <div id="overlay-badge" class="overlay-status-badge">MISSION COMPLETE</div>
+      <h1 id="overlay-title">YOU FREED ASTRO STEVE!</h1>
+      <p id="overlay-sub">Astro Steve ignited his thrusters and blasted off toward Earth! The cosmic cakes have been vanquished.</p>
+
+      <div id="mission-stats" class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-num" id="stat-time">0.0s</div>
+          <div class="stat-card-label">MISSION TIME</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num" id="stat-jumps">0</div>
+          <div class="stat-card-label">JUMPS LOGGED</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num" id="stat-deaths">0</div>
+          <div class="stat-card-label">RESPAWNS</div>
+        </div>
+      </div>
+
+      <button id="restart" class="glow-button">
+        <span class="btn-text">PLAY AGAIN</span>
+        <div class="btn-glow"></div>
+      </button>
     </div>
   </div>
+
   <script src="game.js"></script>
 </body>
 </html>
