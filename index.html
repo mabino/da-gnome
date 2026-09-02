@@ -4,12 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <meta name="theme-color" content="#1a0808" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="description" content="Da Gnome Pal on Mars - An updated, high-fidelity 2026 HTML5 canvas sidescroller. Avoid the cosmic cakes and rescue Astro Steve!" />
   <title>Da Gnome Pal on Mars — 2026 Edition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2.0.2">
+  <script>
+    // Global safety error logger for user visibility
+    window.addEventListener('error', function(e) {
+      console.error('Captured window error:', e);
+      var banner = document.getElementById('runtime-error-banner');
+      if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'runtime-error-banner';
+        banner.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#ff2244;color:#fff;padding:10px 20px;border-radius:8px;z-index:99999;font-family:sans-serif;font-size:13px;font-weight:bold;box-shadow:0 4px 20px rgba(0,0,0,0.6);border:1px solid #ff8899;text-align:center;max-width:90vw;';
+        document.body.appendChild(banner);
+      }
+      banner.textContent = 'Runtime Warning: ' + (e.message || 'Unknown error');
+    });
+  </script>
 </head>
 <body>
   <div id="game-wrap">
@@ -74,7 +91,7 @@
         </div>
       </div>
 
-      <button id="play-btn" class="glow-button" onclick="startGame()">
+      <button id="play-btn" class="glow-button" onclick="if(window.startGame) window.startGame();">
         <span class="btn-text">LAUNCH MISSION</span>
         <div class="btn-glow"></div>
       </button>
@@ -110,6 +127,6 @@
     </div>
   </div>
 
-  <script src="game.js"></script>
+  <script src="game.js?v=2.0.2"></script>
 </body>
 </html>

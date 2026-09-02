@@ -29,7 +29,13 @@ jobs:
         with:
           node-version: 22
 
-      - name: Run Test Suite
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium & dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Test Suite & E2E Browser Gate
         run: npm test
 
   deploy:

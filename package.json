@@ -12,6 +12,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "browser-sync": "^3.0.4"
+    "@playwright/test": "^1.62.1",
+    "browser-sync": "^3.0.4",
+    "playwright": "^1.62.1"
   }
 }
